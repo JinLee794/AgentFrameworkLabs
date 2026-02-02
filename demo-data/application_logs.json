@@ -1,0 +1,96 @@
+[
+  {
+    "timestamp": "2026-01-31T08:15:23.456Z",
+    "level": "ERROR",
+    "service": "order-service",
+    "server": "vm-prod-01",
+    "trace_id": "abc123def456",
+    "message": "Database connection timeout after 30000ms",
+    "exception": "System.TimeoutException: The operation has timed out.",
+    "stack_trace": "at OrderService.Repository.GetOrderAsync()\n   at OrderService.Controllers.OrderController.GetOrder()"
+  },
+  {
+    "timestamp": "2026-01-31T08:15:24.123Z",
+    "level": "ERROR",
+    "service": "order-service",
+    "server": "vm-prod-01",
+    "trace_id": "abc123def457",
+    "message": "Failed to process order #12847 - Database unavailable",
+    "exception": "System.Data.SqlClient.SqlException: A network-related error occurred",
+    "stack_trace": "at OrderService.Repository.CreateOrderAsync()\n   at OrderService.Controllers.OrderController.CreateOrder()"
+  },
+  {
+    "timestamp": "2026-01-31T08:15:45.789Z",
+    "level": "WARN",
+    "service": "payment-service",
+    "server": "vm-api-01",
+    "trace_id": "xyz789abc012",
+    "message": "Payment gateway response time exceeded threshold: 2845ms",
+    "metadata": {"gateway": "stripe", "threshold_ms": 2000, "actual_ms": 2845}
+  },
+  {
+    "timestamp": "2026-01-31T08:16:02.345Z",
+    "level": "ERROR",
+    "service": "inventory-service",
+    "server": "vm-db-01",
+    "trace_id": "inv456def789",
+    "message": "Connection pool exhausted - max connections reached",
+    "exception": "Npgsql.NpgsqlException: The connection pool has been exhausted",
+    "metadata": {"pool_size": 100, "active_connections": 100, "waiting_requests": 47}
+  },
+  {
+    "timestamp": "2026-01-31T08:16:15.678Z",
+    "level": "CRITICAL",
+    "service": "database-primary",
+    "server": "vm-db-01",
+    "trace_id": "db001critical",
+    "message": "Primary database CPU at 94.7% - performance degradation imminent",
+    "metadata": {"cpu_percent": 94.7, "active_queries": 156, "blocked_queries": 23}
+  },
+  {
+    "timestamp": "2026-01-31T08:16:30.234Z",
+    "level": "WARN",
+    "service": "cache-service",
+    "server": "vm-cache-01",
+    "trace_id": "cache123warn",
+    "message": "Redis memory usage high - approaching eviction threshold",
+    "metadata": {"memory_used_gb": 13.6, "memory_max_gb": 16, "keys_count": 2456789}
+  },
+  {
+    "timestamp": "2026-01-31T08:17:01.567Z",
+    "level": "INFO",
+    "service": "health-monitor",
+    "server": "vm-prod-02",
+    "trace_id": "hm001info",
+    "message": "Automated failover initiated for database connections",
+    "metadata": {"failover_to": "vm-db-02", "affected_services": ["order-service", "inventory-service"]}
+  },
+  {
+    "timestamp": "2026-01-31T08:17:45.890Z",
+    "level": "ERROR",
+    "service": "notification-service",
+    "server": "vm-api-01",
+    "trace_id": "notif789err",
+    "message": "Failed to send alert notification - Teams webhook timeout",
+    "exception": "System.Net.Http.HttpRequestException: Connection refused",
+    "metadata": {"webhook_url": "https://outlook.office.com/webhook/***", "retry_count": 3}
+  },
+  {
+    "timestamp": "2026-01-31T08:18:12.123Z",
+    "level": "WARN",
+    "service": "api-gateway",
+    "server": "vm-api-01",
+    "trace_id": "apigw456warn",
+    "message": "Rate limiting activated for /api/orders endpoint",
+    "metadata": {"requests_per_minute": 5842, "limit": 5000, "blocked_requests": 842}
+  },
+  {
+    "timestamp": "2026-01-31T08:19:00.456Z",
+    "level": "INFO",
+    "service": "auto-scaler",
+    "server": "vm-prod-01",
+    "trace_id": "scale001info",
+    "message": "Horizontal pod autoscaler triggered - scaling order-service from 3 to 5 replicas",
+    "metadata": {"current_replicas": 3, "desired_replicas": 5, "trigger": "cpu_threshold_exceeded"}
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "servers": [
+    {
+      "name": "vm-prod-01",
+      "type": "Virtual Machine",
+      "provider": "Azure",
+      "region": "eastus",
+      "resource_group": "prod-rg",
+      "size": "Standard_D4s_v3",
+      "specs": {"vcpus": 4, "memory_gb": 16, "disk_gb": 128},
+      "os": "Ubuntu 22.04 LTS",
+      "role": "Application Server",
+      "services": ["order-service", "notification-service"],
+      "tags": {"environment": "production", "team": "backend", "cost_center": "CC-1001"},
+      "created_at": "2025-06-15T00:00:00Z"
+    },
+    {
+      "name": "vm-prod-02",
+      "type": "Virtual Machine",
+      "provider": "Azure",
+      "region": "eastus",
+      "resource_group": "prod-rg",
+      "size": "Standard_D4s_v3",
+      "specs": {"vcpus": 4, "memory_gb": 16, "disk_gb": 128},
+      "os": "Ubuntu 22.04 LTS",
+      "role": "Application Server",
+      "services": ["order-service", "health-monitor"],
+      "tags": {"environment": "production", "team": "backend", "cost_center": "CC-1001"},
+      "created_at": "2025-06-15T00:00:00Z"
+    },
+    {
+      "name": "vm-db-01",
+      "type": "Virtual Machine",
+      "provider": "Azure",
+      "region": "westus",
+      "resource_group": "prod-rg",
+      "size": "Standard_E8s_v3",
+      "specs": {"vcpus": 8, "memory_gb": 64, "disk_gb": 512},
+      "os": "Ubuntu 22.04 LTS",
+      "role": "Database Primary",
+      "services": ["postgresql-primary", "inventory-service-db"],
+      "tags": {"environment": "production", "team": "platform", "cost_center": "CC-1002"},
+      "created_at": "2025-03-01T00:00:00Z"
+    },
+    {
+      "name": "vm-db-02",
+      "type": "Virtual Machine",
+      "provider": "Azure",
+      "region": "westus",
+      "resource_group": "prod-rg",
+      "size": "Standard_E8s_v3",
+      "specs": {"vcpus": 8, "memory_gb": 64, "disk_gb": 512},
+      "os": "Ubuntu 22.04 LTS",
+      "role": "Database Replica",
+      "services": ["postgresql-replica"],
+      "tags": {"environment": "production", "team": "platform", "cost_center": "CC-1002"},
+      "created_at": "2025-03-01T00:00:00Z"
+    },
+    {
+      "name": "vm-api-01",
+      "type": "Virtual Machine",
+      "provider": "Azure",
+      "region": "northeurope",
+      "resource_group": "prod-rg",
+      "size": "Standard_D2s_v3",
+      "specs": {"vcpus": 2, "memory_gb": 8, "disk_gb": 64},
+      "os": "Ubuntu 22.04 LTS",
+      "role": "API Gateway",
+      "services": ["api-gateway", "payment-service"],
+      "tags": {"environment": "production", "team": "api", "cost_center": "CC-1003"},
+      "created_at": "2025-08-20T00:00:00Z"
+    },
+    {
+      "name": "vm-cache-01",
+      "type": "Virtual Machine",
+      "provider": "Azure",
+      "region": "eastus",
+      "resource_group": "prod-rg",
+      "size": "Standard_E4s_v3",
+      "specs": {"vcpus": 4, "memory_gb": 32, "disk_gb": 64},
+      "os": "Ubuntu 22.04 LTS",
+      "role": "Cache Server",
+      "services": ["redis-primary"],
+      "tags": {"environment": "production", "team": "platform", "cost_center": "CC-1002"},
+      "created_at": "2025-04-10T00:00:00Z"
+    }
+  ],
+  "services": [
+    {"name": "order-service", "type": "microservice", "language": "C#", "team": "backend", "repo": "contoso/order-service"},
+    {"name": "inventory-service", "type": "microservice", "language": "Python", "team": "backend", "repo": "contoso/inventory-service"},
+    {"name": "payment-service", "type": "microservice", "language": "Go", "team": "payments", "repo": "contoso/payment-service"},
+    {"name": "notification-service", "type": "microservice", "language": "TypeScript", "team": "backend", "repo": "contoso/notification-service"},
+    {"name": "api-gateway", "type": "infrastructure", "language": "Go", "team": "api", "repo": "contoso/api-gateway"},
+    {"name": "health-monitor", "type": "infrastructure", "language": "Python", "team": "platform", "repo": "contoso/health-monitor"}
+  ],
+  "metadata": {
+    "total_servers": 6,
+    "total_services": 6,
+    "regions": ["eastus", "westus", "northeurope"],
+    "last_updated": "2026-01-31T08:00:00Z"
+  }
+}

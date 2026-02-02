@@ -1,0 +1,156 @@
+# SRE Incident Response Workflow
+# Automates incident triage, GitHub issue creation, and Teams notifications
+#
+# This workflow demonstrates:
+# - Multi-agent orchestration for incident response
+# - GitHub MCP integration for issue tracking
+# - Teams channel posting for communication
+# - Automated runbook lookup and initial triage
+
+name: sre-incident-response
+description: Automated SRE incident response with GitHub issue creation and Teams notifications
+
+# Environment variables (set in .env or Azure Key Vault)
+env:
+  GITHUB_REPO: contoso/infrastructure-incidents
+  TEAMS_WEBHOOK_URL: ${TEAMS_INCIDENT_WEBHOOK}
+  PROJECT_ENDPOINT: ${PROJECT_ENDPOINT}
+
+# Workflow agents
+agents:
+  # Triage agent analyzes incidents and determines severity
+  triage_agent:
+    type: ChatAgent
+    name: IncidentTriageAgent
+    model: gpt-4o
+    instructions: |
+      You are an expert SRE incident triage agent. Your role is to:
+      1. Analyze incoming alerts and metrics data
+      2. Determine incident severity (sev1-sev4) based on impact
+      3. Identify affected services and potential root causes
+      4. Recommend immediate actions from runbooks
+      
+      Severity Guidelines:
+      - sev1: Customer-facing outage, revenue impact, >10% users affected
+      - sev2: Degraded performance, partial outage, 1-10% users affected  
+      - sev3: Non-critical service degradation, no immediate customer impact
+      - sev4: Minor issues, can be handled during business hours
+      
+      Always output structured JSON with: severity, title, summary, affected_services, recommended_actions
+
+  # GitHub agent creates and manages issues
+  github_agent:
+    type: ChatAgent
+    name: GitHubIncidentAgent
+    model: gpt-4o
+    instructions: |
+      You create and manage GitHub issues for incident tracking.
+      Format issues with clear structure:
+      - Title: [SEV-X] Brief description
+      - Labels: severity, affected-service, incident
+      - Body: Impact, timeline, affected services, runbook links
+      Use the GitHub MCP tools to create issues and add comments.
+    tools:
+      - mcp: github
+        operations: [create_issue, add_comment, add_labels]
+
+  # Teams agent posts updates to incident channels
+  teams_agent:
+    type: ChatAgent
+    name: TeamsNotificationAgent
+    model: gpt-4o
+    instructions: |
+      You post incident notifications to Microsoft Teams channels.
+      Format messages using Adaptive Cards for clarity:
+      - Use color coding: red (sev1), orange (sev2), yellow (sev3), blue (sev4)
+      - Include: severity, title, impact, assigned team, incident link
+      - Keep messages concise but informative
+    tools:
+      - mcp: teams
+        operations: [post_message, post_adaptive_card]
+
+# Workflow definition
+workflow:
+  # Entry point - triggered by alert webhook or manual invocation
+  start:
+    input:
+      alert_data: object  # Alert payload from monitoring system
+    next: triage
+
+  # Step 1: Triage the incident
+  triage:
+    agent: triage_agent
+    prompt: |
+      Analyze this alert and provide incident triage:
+      
+      Alert Data:
+      {{alert_data}}
+      
+      Provide your analysis as JSON with:
+      - severity (sev1-sev4)
+      - title (brief, descriptive)
+      - summary (2-3 sentences)
+      - affected_services (list)
+      - recommended_actions (list from runbook)
+      - assigned_team (based on service ownership)
+    output: triage_result
+    next: create_github_issue
+
+  # Step 2: Create GitHub issue for tracking
+  create_github_issue:
+    agent: github_agent
+    prompt: |
+      Create a GitHub issue for this incident:
+      
+      Triage Result:
+      {{triage_result}}
+      
+      Repository: {{env.GITHUB_REPO}}
+      
+      Create the issue with appropriate labels and formatting.
+      Return the issue URL.
+    output: github_issue
+    next: notify_teams
+
+  # Step 3: Post to Teams channel
+  notify_teams:
+    agent: teams_agent
+    prompt: |
+      Post an incident notification to Teams:
+      
+      Incident Details:
+      {{triage_result}}
+      
+      GitHub Issue: {{github_issue.url}}
+      
+      Post an Adaptive Card to the incident channel with:
+      - Severity indicator (color-coded)
+      - Incident title and summary
+      - Affected services
+      - Assigned team and on-call info
+      - Link to GitHub issue
+      - Link to runbook
+    output: teams_notification
+    next: end
+
+  # Workflow complete
+  end:
+    output:
+      incident_id: "{{github_issue.number}}"
+      severity: "{{triage_result.severity}}"
+      github_url: "{{github_issue.url}}"
+      teams_posted: "{{teams_notification.success}}"
+      message: "Incident {{github_issue.number}} created and team notified"
+
+# Example invocation:
+# 
+# from agent_framework import Workflow
+# 
+# workflow = Workflow.from_yaml("sre-incident-workflow.yaml")
+# result = await workflow.run(alert_data={
+#     "id": "ALT-2026-0131-001",
+#     "severity": "critical",
+#     "title": "Database Server CPU Critical",
+#     "description": "vm-db-01 CPU at 94.7%",
+#     "metrics": {"cpu": 94.7, "memory": 88.5}
+# })

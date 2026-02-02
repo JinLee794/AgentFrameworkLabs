@@ -1,0 +1,117 @@
+{
+  "alerts": [
+    {
+      "id": "ALT-2026-0131-001",
+      "severity": "critical",
+      "status": "firing",
+      "title": "Database Server CPU Critical",
+      "description": "vm-db-01 CPU utilization exceeded 90% for more than 5 minutes",
+      "source": "Azure Monitor",
+      "resource": "/subscriptions/xxx/resourceGroups/prod-rg/providers/Microsoft.Compute/virtualMachines/vm-db-01",
+      "fired_at": "2026-01-31T08:15:00Z",
+      "labels": {
+        "environment": "production",
+        "team": "platform",
+        "service": "database"
+      },
+      "metrics": {
+        "current_value": 94.7,
+        "threshold": 90,
+        "unit": "percent"
+      },
+      "runbook_url": "https://wiki.contoso.com/runbooks/high-cpu-database"
+    },
+    {
+      "id": "ALT-2026-0131-002",
+      "severity": "high",
+      "status": "firing",
+      "title": "Database Memory Warning",
+      "description": "vm-db-01 memory utilization exceeded 85% threshold",
+      "source": "Azure Monitor",
+      "resource": "/subscriptions/xxx/resourceGroups/prod-rg/providers/Microsoft.Compute/virtualMachines/vm-db-01",
+      "fired_at": "2026-01-31T08:12:00Z",
+      "labels": {
+        "environment": "production",
+        "team": "platform",
+        "service": "database"
+      },
+      "metrics": {
+        "current_value": 88.5,
+        "threshold": 85,
+        "unit": "percent"
+      },
+      "runbook_url": "https://wiki.contoso.com/runbooks/high-memory-database"
+    },
+    {
+      "id": "ALT-2026-0131-003",
+      "severity": "medium",
+      "status": "firing",
+      "title": "Cache Memory High",
+      "description": "vm-cache-01 Redis memory approaching eviction threshold",
+      "source": "Azure Monitor",
+      "resource": "/subscriptions/xxx/resourceGroups/prod-rg/providers/Microsoft.Cache/Redis/prod-redis",
+      "fired_at": "2026-01-31T08:10:00Z",
+      "labels": {
+        "environment": "production",
+        "team": "platform",
+        "service": "cache"
+      },
+      "metrics": {
+        "current_value": 85.9,
+        "threshold": 80,
+        "unit": "percent"
+      },
+      "runbook_url": "https://wiki.contoso.com/runbooks/redis-memory-management"
+    },
+    {
+      "id": "ALT-2026-0131-004",
+      "severity": "high",
+      "status": "firing",
+      "title": "Connection Pool Exhausted",
+      "description": "inventory-service database connection pool at 100% capacity",
+      "source": "Application Insights",
+      "resource": "/subscriptions/xxx/resourceGroups/prod-rg/providers/Microsoft.Insights/components/prod-appinsights",
+      "fired_at": "2026-01-31T08:16:00Z",
+      "labels": {
+        "environment": "production",
+        "team": "backend",
+        "service": "inventory"
+      },
+      "metrics": {
+        "current_value": 100,
+        "threshold": 90,
+        "unit": "connections"
+      },
+      "runbook_url": "https://wiki.contoso.com/runbooks/connection-pool-exhaustion"
+    },
+    {
+      "id": "ALT-2026-0131-005",
+      "severity": "medium",
+      "status": "firing",
+      "title": "API Rate Limiting Active",
+      "description": "Rate limiting triggered on /api/orders endpoint - requests exceeding 5000/min",
+      "source": "API Gateway",
+      "resource": "/subscriptions/xxx/resourceGroups/prod-rg/providers/Microsoft.ApiManagement/service/prod-apim",
+      "fired_at": "2026-01-31T08:18:00Z",
+      "labels": {
+        "environment": "production",
+        "team": "api",
+        "service": "gateway"
+      },
+      "metrics": {
+        "current_value": 5842,
+        "threshold": 5000,
+        "unit": "requests/min"
+      },
+      "runbook_url": "https://wiki.contoso.com/runbooks/api-rate-limiting"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "critical": 1,
+    "high": 2,
+    "medium": 2,
+    "low": 0,
+    "generated_at": "2026-01-31T08:20:00Z"
+  }
+}

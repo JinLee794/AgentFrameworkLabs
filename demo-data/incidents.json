@@ -1,0 +1,63 @@
+{
+  "incidents": [
+    {
+      "id": "INC-2026-0131-001",
+      "title": "Production Database Performance Degradation",
+      "status": "investigating",
+      "severity": "sev1",
+      "priority": "P1",
+      "created_at": "2026-01-31T08:16:00Z",
+      "updated_at": "2026-01-31T08:20:00Z",
+      "description": "Primary production database (vm-db-01) experiencing severe performance degradation with CPU at 94.7% and memory at 88.5%. Multiple downstream services affected.",
+      "impact": {
+        "affected_services": ["order-service", "inventory-service", "payment-service"],
+        "affected_users_estimate": 15000,
+        "revenue_impact_per_hour": "$12,500"
+      },
+      "timeline": [
+        {"timestamp": "2026-01-31T08:12:00Z", "event": "Memory alert triggered", "author": "Azure Monitor"},
+        {"timestamp": "2026-01-31T08:15:00Z", "event": "CPU alert triggered - critical threshold breached", "author": "Azure Monitor"},
+        {"timestamp": "2026-01-31T08:16:00Z", "event": "Incident created and SRE team paged", "author": "PagerDuty"},
+        {"timestamp": "2026-01-31T08:17:00Z", "event": "Automated failover to vm-db-02 initiated", "author": "Health Monitor"},
+        {"timestamp": "2026-01-31T08:18:00Z", "event": "Rate limiting activated on affected APIs", "author": "API Gateway"},
+        {"timestamp": "2026-01-31T08:20:00Z", "event": "SRE team investigating - identified long-running queries", "author": "oncall@contoso.com"}
+      ],
+      "assigned_to": "platform-sre-team",
+      "communication_channel": "#incident-2026-0131-001",
+      "related_alerts": ["ALT-2026-0131-001", "ALT-2026-0131-002", "ALT-2026-0131-004"],
+      "runbook": "https://wiki.contoso.com/runbooks/database-performance-degradation"
+    },
+    {
+      "id": "INC-2026-0130-003",
+      "title": "Redis Cache Memory Pressure",
+      "status": "monitoring",
+      "severity": "sev3",
+      "priority": "P3",
+      "created_at": "2026-01-30T14:30:00Z",
+      "updated_at": "2026-01-31T08:00:00Z",
+      "description": "Redis cache consistently operating above 80% memory utilization. Not immediately critical but requires attention to prevent evictions.",
+      "impact": {
+        "affected_services": ["all-services-using-cache"],
+        "affected_users_estimate": 0,
+        "revenue_impact_per_hour": "$0"
+      },
+      "timeline": [
+        {"timestamp": "2026-01-30T14:30:00Z", "event": "Memory warning threshold breached", "author": "Azure Monitor"},
+        {"timestamp": "2026-01-30T15:00:00Z", "event": "Ticket created for cache review", "author": "oncall@contoso.com"},
+        {"timestamp": "2026-01-31T08:00:00Z", "event": "Scheduled for cache key audit during next maintenance window", "author": "platform-team"}
+      ],
+      "assigned_to": "platform-team",
+      "communication_channel": "#platform-ops",
+      "related_alerts": ["ALT-2026-0131-003"],
+      "runbook": "https://wiki.contoso.com/runbooks/redis-memory-management"
+    }
+  ],
+  "statistics": {
+    "active_incidents": 2,
+    "sev1": 1,
+    "sev2": 0,
+    "sev3": 1,
+    "mttr_last_30_days_minutes": 45,
+    "incidents_last_7_days": 8
+  }
+}

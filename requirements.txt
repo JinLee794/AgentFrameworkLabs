@@ -1,0 +1,13 @@
+# Microsoft Agent Framework - Core packages
+agent-framework --pre
+agent-framework-azure-ai --pre
+agent-framework-devui --pre
+agent-framework-ag-ui --pre
+
+# Azure SDK
+azure-identity
+
+# Development tools
+python-dotenv
+pydantic
+debugpy

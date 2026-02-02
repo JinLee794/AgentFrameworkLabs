@@ -1,0 +1,72 @@
+# Environment files (contain secrets)
+.env
+!.env.sample
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Type checking
+.mypy_cache/
+
+# OpenTelemetry / Tracing
+traces/
+*.otlp
+
+# Agent Framework
+checkpoints/
+sessions/
+*.checkpoint
+thread_state.json
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+db-performance-subagent.yaml

@@ -1,0 +1,69 @@
+{
+  "schedules": [
+    {
+      "team": "platform-sre-team",
+      "current_on_call": {
+        "primary": {
+          "name": "Alex Chen",
+          "email": "alex.chen@contoso.com",
+          "phone": "+1-555-0101",
+          "slack": "@alex.chen"
+        },
+        "secondary": {
+          "name": "Sarah Johnson",
+          "email": "sarah.johnson@contoso.com",
+          "phone": "+1-555-0102",
+          "slack": "@sarah.j"
+        }
+      },
+      "rotation_start": "2026-01-27T09:00:00Z",
+      "rotation_end": "2026-02-03T09:00:00Z"
+    },
+    {
+      "team": "backend-team",
+      "current_on_call": {
+        "primary": {
+          "name": "Marcus Williams",
+          "email": "marcus.williams@contoso.com",
+          "phone": "+1-555-0201",
+          "slack": "@marcus.w"
+        },
+        "secondary": {
+          "name": "Emily Rodriguez",
+          "email": "emily.rodriguez@contoso.com",
+          "phone": "+1-555-0202",
+          "slack": "@emily.r"
+        }
+      },
+      "rotation_start": "2026-01-27T09:00:00Z",
+      "rotation_end": "2026-02-03T09:00:00Z"
+    },
+    {
+      "team": "api-team",
+      "current_on_call": {
+        "primary": {
+          "name": "David Kim",
+          "email": "david.kim@contoso.com",
+          "phone": "+1-555-0301",
+          "slack": "@david.k"
+        },
+        "secondary": {
+          "name": "Lisa Park",
+          "email": "lisa.park@contoso.com",
+          "phone": "+1-555-0302",
+          "slack": "@lisa.p"
+        }
+      },
+      "rotation_start": "2026-01-27T09:00:00Z",
+      "rotation_end": "2026-02-03T09:00:00Z"
+    }
+  ],
+  "escalation_policy": {
+    "levels": [
+      {"wait_minutes": 5, "target": "primary_on_call"},
+      {"wait_minutes": 10, "target": "secondary_on_call"},
+      {"wait_minutes": 15, "target": "team_manager"},
+      {"wait_minutes": 30, "target": "vp_engineering"}
+    ]
+  }
+}
