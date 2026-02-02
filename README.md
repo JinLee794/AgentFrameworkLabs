@@ -36,7 +36,7 @@ The [AI Toolkit extension](https://marketplace.visualstudio.com/items?itemName=m
 
 ```bash
 # Launch DevUI (discovers agents in workspace)
-devui --port 8080 .
+devui --port 8080 entities
 ```
 
 Or use the VS Code task: **Start Agent Server (DevUI Discovery)**
@@ -44,7 +44,7 @@ Or use the VS Code task: **Start Agent Server (DevUI Discovery)**
 ### Direct Server
 
 ```bash
-python agui_server.py  # Starts AG-UI server on port 8888
+python entities/ag_ui/agui_server.py  # Starts AG-UI server on port 8888
 ```
 
 ## Azure SRE Agent (Portal)
