@@ -5,27 +5,44 @@ Hands-on labs for building AI agents with the **Microsoft Agent Framework** and 
 ## What You'll Learn
 
 - Building conversational agents with tool-calling capabilities
+- **Connecting agents to vector stores (Cosmos DB) for RAG**
 - Orchestrating multi-agent workflows (incident response, triage)
 - Integrating agents with AG-UI for interactive web experiences
 - Working with Azure SRE Agent for automated site reliability operations
 
 ## Labs
 
-| Lab | Description |
-|-----|-------------|
-| [lab1-agent-basics.ipynb](lab1-agent-basics.ipynb) | Core Agent Framework concepts and tool definitions |
-| [lab2-sre-agent-basics.ipynb](lab2-sre-agent-basics.ipynb) | Azure SRE Agent fundamentals |
-| [lab3-sre-extensibility.ipynb](lab3-sre-extensibility.ipynb) | Extending Azure SRE Agent with custom subagents |
-| [lab-agui-integration.ipynb](lab-agui-integration.ipynb) | AG-UI protocol for streaming agent UIs |
+| Lab | Duration | Description |
+|-----|----------|-------------|
+| [lab1-agent-basics.ipynb](lab1-agent-basics.ipynb) | 15 min | Core Agent Framework concepts: Agent, Thread, Run, Tools |
+| [lab1a-cosmosdb-vector-store.ipynb](lab1a-cosmosdb-vector-store.ipynb) | 20 min | **RAG with Cosmos DB**: Vector search, embeddings, grounded responses |
+| [lab2-sre-agent-basics.ipynb](lab2-sre-agent-basics.ipynb) | 20 min | Azure SRE Agent fundamentals |
+| [lab3-sre-extensibility.ipynb](lab3-sre-extensibility.ipynb) | 25 min | Extending Azure SRE Agent with custom subagents |
+| [lab-agui-integration.ipynb](lab-agui-integration.ipynb) | 20 min | AG-UI protocol for streaming agent UIs |
 
 ## Getting Started
 
-```bash
-# Install dependencies
-pip install -r requirements.txt
+### 1. Install Dependencies
 
-# Set environment variables
-cp .env.sample .env  # Add your PROJECT_ENDPOINT from Azure AI Foundry
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Configure Environment
+
+```bash
+cp .env.sample .env
+# Edit .env with your PROJECT_ENDPOINT from Azure AI Foundry
+```
+
+### 3. (Lab 1a) Set Up Cosmos DB Vector Store
+
+```bash
+# Create Cosmos DB with vector search (~$1-5/month serverless)
+./scripts/setup-cosmosdb.sh
+
+# Load sample knowledge base
+python scripts/load_knowledge_base.py
 ```
 
 ## Running Agents

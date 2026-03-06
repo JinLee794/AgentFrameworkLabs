@@ -6,8 +6,13 @@ agent-framework-ag-ui --pre
 
 # Azure SDK
 azure-identity
+azure-cosmos  # Lab 1a: Vector store
+
+# OpenAI SDK (for embeddings)
+openai
 
 # Development tools
 python-dotenv
 pydantic
 debugpy
+ipykernel
