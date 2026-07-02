@@ -36,6 +36,7 @@ ENV/
 .vscode/
 !.vscode/tasks.json
 !.vscode/launch.json
+!.vscode/settings.json
 .idea/
 *.swp
 *.swo
@@ -67,6 +68,8 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+~$*
 
-# Generated files
-db-performance-subagent.yaml
+# Generated / runtime artifacts
+agui_server.py
+sandbox-workspace/

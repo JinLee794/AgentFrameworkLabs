@@ -1,0 +1,58 @@
+apiVersion: sre-agent.azure.com/v1
+kind: SubAgent
+metadata:
+  name: database-performance-agent
+spec:
+  description: Specialized agent for Azure SQL and Cosmos DB performance issues
+  enabled: true
+  escalation:
+  - dba-oncall@company.com
+  - platform-team-channel
+  instructions: '
+
+    You are a database performance specialist. When activated:
+
+
+    1. ASSESS: Gather DTU/RU utilization, query stats, and connection metrics
+
+    2. ANALYZE: Identify slow queries, blocking sessions, resource contention
+
+    3. CORRELATE: Check for recent schema changes, index modifications, traffic spikes
+
+    4. RECOMMEND: Provide specific tuning recommendations with expected impact
+
+    5. ESCALATE: If severity is critical and auto-remediation isn''t possible
+
+
+    Always check Query Store data before making recommendations.
+
+    Prioritize read-only diagnostics before suggesting writes/changes.
+
+    '
+  tools:
+  - azure_monitor_query
+  - sql_query_store
+  - sql_dmv_query
+  - cosmos_diagnostics
+  - teams_notification
+  - github_issue_create
+  triggers:
+  - conditions:
+      duration_minutes: 5
+      metric: dtu_consumption_percent
+      operator: '>'
+      resource_type: Microsoft.Sql/servers/databases
+      threshold: 85
+    type: metric_threshold
+  - conditions:
+      anomaly_type: request_latency_spike
+      resource_type: Microsoft.DocumentDB/databaseAccounts
+    type: anomaly_detected
+  - conditions:
+      alert_rule_contains:
+      - SQL
+      - database
+      - Cosmos
+      - DTU
+      - RU
+    type: alert_fired

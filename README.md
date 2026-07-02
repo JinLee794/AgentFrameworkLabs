@@ -14,11 +14,11 @@ Hands-on labs for building AI agents with the **Microsoft Agent Framework** and 
 
 | Lab | Duration | Description |
 |-----|----------|-------------|
-| [lab1-agent-basics.ipynb](lab1-agent-basics.ipynb) | 15 min | Core Agent Framework concepts: Agent, Thread, Run, Tools |
-| [lab1a-cosmosdb-vector-store.ipynb](lab1a-cosmosdb-vector-store.ipynb) | 20 min | **RAG with Cosmos DB**: Vector search, embeddings, grounded responses |
-| [lab2-sre-agent-basics.ipynb](lab2-sre-agent-basics.ipynb) | 20 min | Azure SRE Agent fundamentals |
-| [lab3-sre-extensibility.ipynb](lab3-sre-extensibility.ipynb) | 25 min | Extending Azure SRE Agent with custom subagents |
-| [lab-agui-integration.ipynb](lab-agui-integration.ipynb) | 20 min | AG-UI protocol for streaming agent UIs |
+| [labs/lab1-agent-basics.ipynb](labs/lab1-agent-basics.ipynb) | 15 min | Core Agent Framework concepts: Agent, Thread, Run, Tools |
+| [labs/lab1a-cosmosdb-vector-store.ipynb](labs/lab1a-cosmosdb-vector-store.ipynb) | 20 min | **RAG with Cosmos DB**: Vector search, embeddings, grounded responses |
+| [labs/lab2-sre-agent-basics.ipynb](labs/lab2-sre-agent-basics.ipynb) | 20 min | Azure SRE Agent fundamentals |
+| [labs/lab3-sre-extensibility.ipynb](labs/lab3-sre-extensibility.ipynb) | 25 min | Extending Azure SRE Agent with custom subagents |
+| [labs/lab-agui-integration.ipynb](labs/lab-agui-integration.ipynb) | 20 min | AG-UI protocol for streaming agent UIs |
 
 ## Getting Started
 
@@ -69,11 +69,11 @@ python entities/ag_ui/agui_server.py  # Starts AG-UI server on port 8888
 For production SRE scenarios, use **Azure SRE Agent** in the Azure Portal:
 
 1. Navigate to **Azure SRE Agent** in your subscription
-2. Configure **Subagents** using YAML definitions (see [db-performance-subagent.yaml](db-performance-subagent.yaml))
+2. Configure **Subagents** using YAML definitions (see [workflows/db-performance-subagent.yaml](workflows/db-performance-subagent.yaml))
 3. Set up **alert triggers** to automatically invoke agents on incidents
 4. Monitor agent actions and incident timelines in the dashboard
 
-The [sre-incident-workflow.yaml](sre-incident-workflow.yaml) demonstrates multi-agent orchestration with GitHub and Teams integrations.
+The [workflows/sre-incident-workflow.yaml](workflows/sre-incident-workflow.yaml) demonstrates multi-agent orchestration with GitHub and Teams integrations.
 
 ## Demo Data
 

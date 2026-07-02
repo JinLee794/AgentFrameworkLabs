@@ -1,0 +1,10 @@
+# Dependencies for the Foundry hosted agent (Responses protocol).
+# Single source of truth — installed by the Dockerfile at build time and for
+# local development. The full `agent-framework` package provides both
+# `agent_framework.foundry` (FoundryChatClient) and the coding harness
+# (`create_harness_agent`).
+agent-framework>=1.10.0
+agent-framework-foundry-hosting>=1.0.0a260630
+azure-identity>=1.25.3
+azure-cosmos>=4.15.0
+python-dotenv>=1.0.0

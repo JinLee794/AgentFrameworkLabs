@@ -146,7 +146,7 @@ workflow:
 # 
 # from agent_framework import Workflow
 # 
-# workflow = Workflow.from_yaml("sre-incident-workflow.yaml")
+# workflow = Workflow.from_yaml("workflows/sre-incident-workflow.yaml")
 # result = await workflow.run(alert_data={
 #     "id": "ALT-2026-0131-001",
 #     "severity": "critical",
